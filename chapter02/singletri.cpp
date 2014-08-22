@@ -14,7 +14,7 @@ void SingleTri::initializeGL()
 {
     glClearColor(0.0f, 0.25f, 0.0f, 1.0f);
     const char * vs_source =
-            "#version 420 core                                                 \n"
+            "#version 130                                                      \n"
             "                                                                  \n"
             "void main(void)                                                   \n"
             "{                                                                 \n"
@@ -26,7 +26,7 @@ void SingleTri::initializeGL()
             "}                                                                 \n";
 
     const char * fs_source =
-        "#version 420 core                             \n"
+        "#version 130                                  \n"
         "                                              \n"
         "out vec4 color;                               \n"
         "                                              \n"

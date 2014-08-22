@@ -1,6 +1,6 @@
 #include "singlepoint.h"
-#include <QGLShader>
-#include <QGLShaderProgram>
+#include <QOpenGLShader>
+#include <QOpenGLShaderProgram>
 #include <QOpenGLVertexArrayObject>
 #include <QPainter>
 #include <QDebug>
@@ -15,7 +15,7 @@ void SinglePoint::initializeGL()
 {
     glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
     const char * vs_source =
-        "#version 420 core                             \n"
+        "#version 130                                  \n"
         "                                              \n"
         "void main(void)                               \n"
         "{                                             \n"
@@ -23,7 +23,7 @@ void SinglePoint::initializeGL()
         "}                                             \n";
 
     const char * fs_source =
-        "#version 420 core                             \n"
+        "#version 130                                  \n"
         "                                              \n"
         "out vec4 color;                               \n"
         "                                              \n"
@@ -31,18 +31,19 @@ void SinglePoint::initializeGL()
         "{                                             \n"
         "    color = vec4(0.0, 0.8, 1.0, 1.0);         \n"
         "}                                             \n";
-    QGLShader* fs = new QGLShader(QGLShader::Fragment);
+    QOpenGLShader* fs = new QOpenGLShader(QOpenGLShader::Fragment);
     fs->compileSourceCode(fs_source);
 
-    QGLShader* vs = new QGLShader(QGLShader::Vertex);
+    QOpenGLShader* vs = new QOpenGLShader(QOpenGLShader::Vertex);
     vs->compileSourceCode(vs_source);
 
-    program = new QGLShaderProgram(this);
+    program = new QOpenGLShaderProgram(this);
     program->addShader(vs);
     program->addShader(fs);
+    program->link();
 
-//    QOpenGLVertexArrayObject* vao = new QOpenGLVertexArrayObject(this);
-//    vao->bind();
+    QOpenGLVertexArrayObject* vao = new QOpenGLVertexArrayObject(this);
+    vao->bind();
     program->bind();
 }
 

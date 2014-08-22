@@ -10,14 +10,14 @@ int main(int argc, char *argv[])
     a.setApplicationName("OpenGL SuperBible");
 
 
-//    SimpleClear simpleClear;
-//    SimpleClear2 simpleClear2;
+    SimpleClear simpleClear;
+    SimpleClear2 simpleClear2;
     SinglePoint singlePoint;
-//    SingleTri singleTri;
+    SingleTri singleTri;
 
-//    simpleClear.show();
-//    simpleClear2.show();
+    simpleClear.show();
+    simpleClear2.show();
     singlePoint.show();
-//    singleTri.show();
+    singleTri.show();
     return a.exec();
 }

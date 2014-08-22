@@ -23,7 +23,7 @@ MovingTri::~MovingTri()
 void MovingTri::initializeGL()
 {
     const char * vs_source =
-        "#version 410 core                                                 \n"
+        "#version 130                                                      \n"
         "                                                                  \n"
         "layout (location = 0) in vec4 offset;                             \n"
         "                                                                  \n"
@@ -37,7 +37,7 @@ void MovingTri::initializeGL()
         "    gl_Position = vertices[gl_VertexID] + offset;                 \n"
         "}                                                                 \n";
     const char * fs_source =
-        "#version 410 core                             \n"
+        "#version 130                                  \n"
         "                                              \n"
         "out vec4 color;                               \n"
         "                                              \n"

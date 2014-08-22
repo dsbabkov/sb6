@@ -13,9 +13,9 @@ int main(int argc, char *argv[])
     TessellatedGsTri tessellatedGsTri;
     FragColorFromPos fragColorFromPos;
 
-//    movingTri.show();
-//    tessellatedTri.show();
-//    tessellatedGsTri.show();
+    movingTri.show();
+    tessellatedTri.show();
+    tessellatedGsTri.show();
     fragColorFromPos.show();
 
     return a.exec();

@@ -16,7 +16,7 @@ void FragColorFromPos::initializeGL()
 {
     glClearColor(0.0f, 0.25f, 0.0f, 1.0f);
     const char * vsInterpolate_source =
-        "#version 420 core                                                          \n"
+        "#version 130                                                               \n"
         "                                                                           \n"
         "void main(void)                                                            \n"
         "{                                                                          \n"
@@ -28,7 +28,7 @@ void FragColorFromPos::initializeGL()
         "}                                                                          \n";
 
     const char * fsInterpolate_source =
-            "#version 420 core                                                          \n"
+            "#version 130                                                               \n"
             "                                                                           \n"
             "out vec4 color;                                                            \n"
             "                                                                           \n"
@@ -52,7 +52,7 @@ void FragColorFromPos::initializeGL()
 
 
     const char * vs_source =
-        "#version 420 core                                                          \n"
+        "#version 130                                                               \n"
         "                                                                           \n"
         "out vec4 vs_color; \n"
         "void main(void)                                                            \n"
@@ -69,7 +69,7 @@ void FragColorFromPos::initializeGL()
         "}                                                                          \n";
 
     const char * fs_source =
-        "#version 420 core                                                          \n"
+        "#version 130                                                               \n"
         "                                                                           \n"
         "in vec4 vs_color;                                                          \n"
         "out vec4 color;                                                            \n"

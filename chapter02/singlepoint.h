@@ -2,7 +2,8 @@
 #define SINGLEPOINT_H
 
 #include <QGLWidget>
-class QGLShaderProgram;
+
+class QOpenGLShaderProgram;
 class QOpenGLVertexArrayObject;
 class SinglePoint : public QGLWidget
 {
@@ -19,8 +20,8 @@ private:
     void paintGL();
     void resizeGL(int w, int h);
 
-    QGLShaderProgram* program;
-//    QOpenGLVertexArrayObject* vao;
+    QOpenGLShaderProgram* program;
+    QOpenGLVertexArrayObject* vao;
 
 };
 
