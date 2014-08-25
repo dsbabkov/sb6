@@ -23,21 +23,21 @@ MovingTri::~MovingTri()
 void MovingTri::initializeGL()
 {
     const char * vs_source =
-        "#version 130                                                      \n"
+        "#version 420                                                      \n"
         "                                                                  \n"
         "layout (location = 0) in vec4 offset;                             \n"
         "                                                                  \n"
         "void main(void)                                                   \n"
         "{                                                                 \n"
-        "    const vec4 vertices[] = vec4[](vec4( 0.25, -0.25, 0.5, 1.0),  \n"
+        "    const vec4 vertices[] =       {vec4( 0.25, -0.25, 0.5, 1.0),  \n"
         "                                   vec4(-0.25, -0.25, 0.5, 1.0),  \n"
-        "                                   vec4( 0.25,  0.25, 0.5, 1.0)); \n"
+        "                                   vec4( 0.25,  0.25, 0.5, 1.0)}; \n"
         "                                                                  \n"
         "    // Add 'offset' to our hard-coded vertex position             \n"
         "    gl_Position = vertices[gl_VertexID] + offset;                 \n"
         "}                                                                 \n";
     const char * fs_source =
-        "#version 130                                  \n"
+        "#version 420                                  \n"
         "                                              \n"
         "out vec4 color;                               \n"
         "                                              \n"
