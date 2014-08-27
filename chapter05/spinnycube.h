@@ -2,7 +2,6 @@
 #define SPINNYCUBE_H
 
 #include <QGLWidget>
-#include <QOpenGLFunctions_4_3_Core>
 
 class QOpenGLShaderProgram;
 class QOpenGLVertexArrayObject;
@@ -10,7 +9,7 @@ class QMatrix4x4;
 class QTimerEvent;
 class QTime;
 
-class SpinnyCube : public QGLWidget, protected QOpenGLFunctions_4_3_Core
+class SpinnyCube : public QGLWidget
 {
     Q_OBJECT
 public:
@@ -33,16 +32,9 @@ private:
 
     QOpenGLShaderProgram* program;
     QMatrix4x4* proj_matrix;
-//    GLuint          program;
-    GLuint          vao;
-    GLuint          buffer;
-//    GLint           mv_location;
-//    GLint           proj_location;
-
-    float           aspect;
-
     QTime* time;
 
+    bool many;
 
 };
 

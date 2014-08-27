@@ -5,8 +5,8 @@
 #include <QMatrix4x4>
 #include <QDebug>
 #include <QTime>
-
 #include <math.h>
+
 SpinnyCube::SpinnyCube(QWidget *parent) :
     QGLWidget(parent)
 {
@@ -15,6 +15,7 @@ SpinnyCube::SpinnyCube(QWidget *parent) :
     proj_matrix = new QMatrix4x4;
     program = new QOpenGLShaderProgram;
     time = new QTime;
+    many = false;
     time->start();
     startTimer(16);
 }
@@ -26,7 +27,7 @@ SpinnyCube::~SpinnyCube()
 
 void SpinnyCube::initializeGL()
 {
-    initializeOpenGLFunctions();
+//    initializeOpenGLFunctions();
     glClearColor(0.0f, 0.25f, 0.0f, 1.0f);
     glClearDepth(1.0f);
 
@@ -74,11 +75,9 @@ void SpinnyCube::initializeGL()
 
     mv_location = program->uniformLocation("mv_matrix");
     proj_location = program->uniformLocation("proj_matrix");
-//    mv_location = glGetUniformLocation(program, "mv_matrix");
-//    proj_location = glGetUniformLocation(program, "proj_matrix");
 
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
+//    QOpenGLVertexArrayObject* vao = new QOpenGLVertexArrayObject(this);
+//    vao->bind();
 
     static const GLfloat vertex_positions[] =
     {
@@ -131,14 +130,14 @@ void SpinnyCube::initializeGL()
         -0.25f,  0.25f, -0.25f
     };
 
-    glGenBuffers(1, &buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, buffer);
-    glBufferData(GL_ARRAY_BUFFER,
-                 sizeof(vertex_positions),
-                 vertex_positions,
-                 GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-    glEnableVertexAttribArray(0);
+    QOpenGLBuffer* buffer = new QOpenGLBuffer;
+    buffer->create();
+    buffer->bind();
+    buffer->allocate(vertex_positions, sizeof(vertex_positions));
+    buffer->setUsagePattern(QOpenGLBuffer::StaticDraw);
+
+    program->setAttributeArray(0, GL_FLOAT, NULL, 3);
+    program->enableAttributeArray(0);
 
     glEnable(GL_CULL_FACE);
     glFrontFace(GL_CW);
@@ -151,44 +150,43 @@ void SpinnyCube::initializeGL()
 
 void SpinnyCube::paintGL()
 {
-    double currentTime = time->elapsed() / 1000.0;
-    static const GLfloat green[] = { 0.0f, 0.25f, 0.0f, 1.0f };
-    static const GLfloat one = 1.0f;
+    float currentTime = time->elapsed() / 1000.0f;
 
-    glClearBufferfv(GL_COLOR, 0, green);
-    glClearBufferfv(GL_DEPTH, 0, &one);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     program->bind();
+    program->setUniformValue(proj_location, *proj_matrix);
 
-    glUniformMatrix4fv(proj_location, 1, GL_FALSE, proj_matrix->constData());
-
-#ifndef MANY_CUBES
-    int i;
-    for (i = 0; i < 24; i++)
+    if (many)
     {
-        float f = (float)i + (float)currentTime * 0.3f;
+        int i;
+        for (i = 0; i < 24; i++)
+        {
+            float f = i + currentTime * 0.3f;
+            QMatrix4x4 mv_matrix;
+            mv_matrix.translate(0.0f, 0.0f, -6.0f);
+            mv_matrix.rotate(currentTime * 45.0f, 0.0f, 1.0f, 0.0f);
+            mv_matrix.rotate(currentTime * 21.0f, 1.0f, 0.0f, 0.0f);
+            mv_matrix.translate(sinf(2.1f * f) * 2.0f,
+                                cosf(1.7f * f) * 2.0f,
+                                sinf(1.3f * f) * cosf(1.5f * f) * 2.0f);
+            program->setUniformValue(mv_location, mv_matrix);
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
+    }
+    else
+    {
+        float f = currentTime * 0.3f;
         QMatrix4x4 mv_matrix;
-        mv_matrix.translate(0.0f, 0.0f, -6.0f);
-        mv_matrix.rotate((float)currentTime * 45.0f, 0.0f, 1.0f, 0.0f);
-        mv_matrix.rotate((float)currentTime * 21.0f, 1.0f, 0.0f, 0.0f);
-        mv_matrix.translate(sinf(2.1f * f) * 2.0f,
-                            cosf(1.7f * f) * 2.0f,
+        mv_matrix.translate(0.0f, 0.0f, -4.0f);
+        mv_matrix.translate(sinf(2.1f * f) * 0.5f,
+                            cosf(1.7f * f) * 0.5f,
                             sinf(1.3f * f) * cosf(1.5f * f) * 2.0f);
-        glUniformMatrix4fv(mv_location, 1, GL_FALSE, mv_matrix.constData());
+        mv_matrix.rotate(currentTime * 45.0f, 0.0f, 1.0f, 0.0f);
+        mv_matrix.rotate(currentTime * 81.0f, 1.0f, 0.0f, 0.0f);
+        program->setUniformValue(mv_location, mv_matrix);
         glDrawArrays(GL_TRIANGLES, 0, 36);
     }
-#else
-    float f = (float)currentTime * 0.3f;
-    QMatrix4x4 mv_matrix;
-    mv_matrix.translate(0.0f, 0.0f, -4.0f);
-    mv_matrix.translate(sinf(2.1f * f) * 0.5f,
-                        cosf(1.7f * f) * 0.5f,
-                        sinf(1.3f * f) * cosf(1.5f * f) * 2.0f);
-    mv_matrix.rotate((float)currentTime * 45.0f, 0.0f, 1.0f, 0.0f);
-    mv_matrix.rotate((float)currentTime * 81.0f, 1.0f, 0.0f, 0.0f);
-    glUniformMatrix4fv(mv_location, 1, GL_FALSE, mv_matrix.constData());
-    glDrawArrays(GL_TRIANGLES, 0, 36);
-#endif
 }
 
 void SpinnyCube::resizeGL(int w, int h)
@@ -201,5 +199,9 @@ void SpinnyCube::resizeGL(int w, int h)
 
 void SpinnyCube::timerEvent(QTimerEvent *)
 {
+    if (time->elapsed() % 4000 < 2000)
+        many = false;
+    else
+        many = true;
     updateGL();
 }
