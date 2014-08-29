@@ -27,57 +27,15 @@ SpinnyCube::~SpinnyCube()
 
 void SpinnyCube::initializeGL()
 {
-//    initializeOpenGLFunctions();
     glClearColor(0.0f, 0.25f, 0.0f, 1.0f);
     glClearDepth(1.0f);
 
-    const char * vs_source =
-    {
-        "#version 410 core                                                  \n"
-        "                                                                   \n"
-        "in vec4 position;                                                  \n"
-        "                                                                   \n"
-        "out VS_OUT                                                         \n"
-        "{                                                                  \n"
-        "    vec4 color;                                                    \n"
-        "} vs_out;                                                          \n"
-        "                                                                   \n"
-        "uniform mat4 mv_matrix;                                            \n"
-        "uniform mat4 proj_matrix;                                          \n"
-        "                                                                   \n"
-        "void main(void)                                                    \n"
-        "{                                                                  \n"
-        "    gl_Position = proj_matrix * mv_matrix * position;              \n"
-        "    vs_out.color = position * 2.0 + vec4(0.5, 0.5, 0.5, 0.0);      \n"
-        "}                                                                  \n"
-    };
-
-    const char * fs_source =
-    {
-        "#version 410 core                                                  \n"
-        "                                                                   \n"
-        "out vec4 color;                                                    \n"
-        "                                                                   \n"
-        "in VS_OUT                                                          \n"
-        "{                                                                  \n"
-        "    vec4 color;                                                    \n"
-        "} fs_in;                                                           \n"
-        "                                                                   \n"
-        "void main(void)                                                    \n"
-        "{                                                                  \n"
-        "    color = fs_in.color;                                           \n"
-        "}                                                                  \n"
-    };
-
-    program->addShaderFromSourceCode(QOpenGLShader::Fragment, fs_source);
-    program->addShaderFromSourceCode(QOpenGLShader::Vertex, vs_source);
+    program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/spinnycube.fsh");
+    program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/spinnycube.vsh");
     program->link();
 
     mv_location = program->uniformLocation("mv_matrix");
     proj_location = program->uniformLocation("proj_matrix");
-
-//    QOpenGLVertexArrayObject* vao = new QOpenGLVertexArrayObject(this);
-//    vao->bind();
 
     static const GLfloat vertex_positions[] =
     {

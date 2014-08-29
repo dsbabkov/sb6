@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>spinnycube.fsh</file>
+        <file>spinnycube.vsh</file>
+    </qresource>
+</RCC>

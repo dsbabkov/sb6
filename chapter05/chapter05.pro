@@ -9,3 +9,6 @@ SOURCES += main.cpp \
 
 
 OTHER_FILES +=
+
+RESOURCES += \
+    chapter05.qrc
