@@ -1,5 +1,3 @@
-#version 130
-
 in vec4 position;
 
 out vec4 vs_out;
