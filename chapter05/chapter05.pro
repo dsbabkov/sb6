@@ -3,9 +3,11 @@ TEMPLATE = app
 TARGET = chapter05
 INCLUDEPATH += .
 
-HEADERS += spinnycube.h
+HEADERS += spinnycube.h \
+    simpletexture.h
 SOURCES += main.cpp \
-    spinnycube.cpp
+    spinnycube.cpp \
+    simpletexture.cpp
 
 
 OTHER_FILES +=
