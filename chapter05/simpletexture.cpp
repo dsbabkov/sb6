@@ -35,8 +35,8 @@ void SimpleTexture::initializeGL()
 
     texture->setData(QOpenGLTexture::RGBA, QOpenGLTexture::Float32, data);
 
-    program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/simpletexture/vs.vsh");
-    program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/simpletexture/fs.fsh");
+    program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/simpletexture/simpletexture.vsh");
+    program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/simpletexture/simpletexture.fsh");
 //    program->addShaderFromSourceCode(QOpenGLShader::Fragment, fs_source);
     program->bind();
 }

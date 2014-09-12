@@ -30,8 +30,8 @@ void SpinnyCube::initializeGL()
     glClearColor(0.0f, 0.25f, 0.0f, 1.0f);
     glClearDepth(1.0f);
 
-    program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/spinnycube.fsh");
-    program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/spinnycube.vsh");
+    program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/spinnycube/spinnycube.fsh");
+    program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/spinnycube/spinnycube.vsh");
     program->link();
 
     mv_location = program->uniformLocation("mv_matrix");
