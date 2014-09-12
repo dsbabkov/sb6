@@ -3,4 +3,8 @@
         <file>spinnycube.fsh</file>
         <file>spinnycube.vsh</file>
     </qresource>
+    <qresource prefix="/simpletexture">
+        <file>vs.vsh</file>
+        <file>fs.fsh</file>
+    </qresource>
 </RCC>

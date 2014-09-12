@@ -12,7 +12,7 @@ class SimpleTexture : public QGLWidget
     Q_OBJECT
 public:
     explicit SimpleTexture(QWidget *parent = 0);
-//    ~SimpleTexture();
+    ~SimpleTexture();
 
 signals:
 
